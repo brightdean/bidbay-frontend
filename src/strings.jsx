@@ -1,0 +1,9 @@
+export const loginHeaderText = 'Please login with your email and password';
+export const loginSubmitText = 'Sign In';
+export const signupSubmitText = 'Sign Up';
+export const createAccountText = 'Dont have an account?';
+export const clickHereSignupText = 'Click here to sign up';
+export const registerHeaderText = 'Sign up for an account';
+export const alreadyHaveAccountText = 'Already have an account?';
+export const clickHereLoginText = 'Click here to sign in';
+export const invalidCredentialsText = 'The credentials you provided appear to be invalid';
