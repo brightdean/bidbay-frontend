@@ -1,3 +1,4 @@
+export const appName = 'Bid Bay';
 export const loginHeaderText = 'Please login with your email and password';
 export const loginSubmitText = 'Sign In';
 export const signupSubmitText = 'Sign Up';
