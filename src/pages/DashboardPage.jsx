@@ -6,6 +6,7 @@ import { LOGOUT_URL } from '../backend/urls'
 import { useNavigate } from 'react-router'
 import Cookies from 'js-cookie'
 import { homeRoute, salesRoute } from '../routes'
+import {MagnifyingGlassIcon} from '@heroicons/react/24/solid'
 
 const DashboardPage = () => {
 
@@ -33,7 +34,22 @@ const DashboardPage = () => {
 
     return (
         <div className='flex w-screen h-screen bg-slate-200'>
-            <AppBar user={auth.user} handleLogout={handleLogout} handleSalesClick={handleSalesClick}/>
+            <section className='fixed top-0 right-0 flex flex-col w-full'>
+                <AppBar user={auth.user} handleLogout={handleLogout} handleSalesClick={handleSalesClick}/>
+                <div className='flex  justify-center w-full p-4'>
+                    <div className='flex w-[50%] bg-white rounded-full p-4 drop-shadow-lg items-center justify-start space-x-4'>
+                        <MagnifyingGlassIcon className='w-6 h-6' color='gray'/>
+                        <input 
+                            type='text'
+                            placeholder='Search items...'
+                            className='w-full text-gray-700 leading-tight focus:outline-none '
+                            >
+
+                        </input>
+                    </div>
+                </div>
+            </section>
+            
         </div>
     );
 }
