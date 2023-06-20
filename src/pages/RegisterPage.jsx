@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { alreadyHaveAccountText, clickHereLoginText, registerHeaderText, signupSubmitText } from '../strings';
 import { useNavigate } from 'react-router';
-import { loginRoute } from '../routes';
+import { dashboardRoute, loginRoute } from '../routes';
+import axios from '../backend/axios';
+import { REGISTER_URL } from '../backend/urls';
+import useAuth from '../hooks/useAuth';
 
 const RegisterPage = () => {
 
-    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+    const { auth, setAuth } = useAuth()
 
     const initialData = {
         firstName: '',
@@ -25,9 +28,16 @@ const RegisterPage = () => {
 
     const [data, setData] = useState(initialData);
 
+    useEffect(() => {
+        if (auth.user)
+            navigate(dashboardRoute, { replace: true })
+            
+    }, [auth.user])
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        //TODO add validation
+        register({ data })
     }
 
     const handleChange = (e) => {
@@ -43,8 +53,19 @@ const RegisterPage = () => {
         navigate(loginRoute);
     }
 
+    const register = async ({ data }) => {
+        axios.post(REGISTER_URL, data)
+            .then(response => {
+                if (response.status === 201) {
+                    localStorage.setItem('user', JSON.stringify(response.data))
+                    setAuth({ user: response.data })
+                }
+            })
+            .catch(error => console.log(error))
+    }
+
     return (
-        <div className="flex h-screen w-screen bg-slate-200">
+        <div className="flex h-full w-full bg-slate-200">
             <RegisterForm data={data}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}

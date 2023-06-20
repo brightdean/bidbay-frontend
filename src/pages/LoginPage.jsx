@@ -3,7 +3,7 @@ import useAuth from "../hooks/useAuth";
 import { clickHereSignupText, createAccountText, invalidCredentialsText, loginHeaderText, loginSubmitText } from "../strings";
 import axios from "../backend/axios";
 import { LOGIN_URL } from "../backend/urls";
-import { json, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { homeRoute, registerRoute } from "../routes";
 
 const LoginPage = () => {
@@ -36,7 +36,8 @@ const LoginPage = () => {
     }
 
     useEffect(() => {
-
+        console.log(auth.user);
+        console.log("LOGIN")
         if (auth.user)
             navigate(from, { replace: true })
     }, [auth.user])
@@ -78,7 +79,6 @@ const LoginPage = () => {
         axios.post(LOGIN_URL, data)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(JSON.stringify(response.data));
                     localStorage.setItem('user', JSON.stringify(response.data))
                     setAuth({ user: response.data })
                 }

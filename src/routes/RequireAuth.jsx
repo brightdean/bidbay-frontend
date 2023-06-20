@@ -19,6 +19,7 @@ const RequireAuth = () => {
 
     if (status) {
         return (
+            
             status === 200 ? <Outlet /> : <Navigate to={loginRoute} state={{ from: location.pathname }} replace={true} />
         );
     } else return <></>;

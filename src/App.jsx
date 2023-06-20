@@ -2,13 +2,13 @@
 import { Route, Routes } from 'react-router'
 import './App.css'
 import Layout from './routes/Layout'
-import { dashboardRoute, homeRoute, loginRoute, registerRoute } from './routes'
+import { dashboardRoute, homeRoute, loginRoute, registerRoute, salesRoute } from './routes'
 import WelcomePage from './pages/WelcomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import RequireAuth from './routes/RequireAuth'
-import ProtectedPage from './pages/ProtectedPage'
 import DashboardPage from './pages/DashboardPage'
+import SalesPage from './pages/SalesPage'
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
         {/* ProtectedRoutes */}
         <Route element={<RequireAuth />}>
           <Route path={dashboardRoute} element={<DashboardPage />} />
+          <Route path={salesRoute} element={<SalesPage/>}/>
         </Route>
 
       </Route>

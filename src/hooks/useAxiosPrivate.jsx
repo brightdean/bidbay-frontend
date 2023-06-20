@@ -11,6 +11,9 @@ const useAxiosPrivate = () => {
     const { auth, setAuth } = useAuth();
     const forceLogout = () => {
         axios.post(LOGOUT_URL);
+        localStorage.removeItem('user')
+        Cookies.remove('access')
+        Cookies.remove('refresh')
         setAuth({});
     }
 
@@ -33,9 +36,11 @@ const useAxiosPrivate = () => {
             response => response,
             async (error) => {
                 const prevRequest = error?.config;
-                if (error?.response?.status === 401 && !prevRequest?.sent) {
+                if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;
+                    console.log("getting new access");
                     const newAccessToken = await refresh();
+                    console.log("new access " + newAccessToken)
                     if (!newAccessToken) {
                         console.warn('refresh expired, loggin out');
                         forceLogout();
@@ -46,11 +51,6 @@ const useAxiosPrivate = () => {
 
                     prevRequest.headers['Authorization'] = `Bearer ${Cookies.get('access')}`;
 
-                    //TODO test
-                    setAuth(prev => {
-
-                        return { ...prev, accessToken: Cookies.get("access") }
-                    });
 
                     return axios(prevRequest);
                 }
