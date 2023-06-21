@@ -1,7 +1,7 @@
 import { UserIcon, ArrowRightOnRectangleIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/solid'
 import { appName, marketPlaceText, salesText } from '../strings'
 
-const AppBar = ({ user, handleLogout, handleSalesClick }) => {
+const AppBar = ({ user, handleLogout, handleProfileClick, handleSalesClick }) => {
     return (
         <section className='flex items-center w-full bg-white py-4 px-6 max-h-[70px] justify-between'>
             <section className='flex justify-start items-center space-x-4'>
@@ -19,7 +19,7 @@ const AppBar = ({ user, handleLogout, handleSalesClick }) => {
 
 
             <section className='flex items-center justify-center space-x-8'>
-                <div className='flex items-center space-x-4'>
+                <div className='flex items-center space-x-4 cursor-pointer p-2 hover:bg-gray-100 transition-colors duration-300 ease-in-out' onClick={handleProfileClick}>
                     <UserIcon className='rounded-full w-12 h-12 border-2 p-2 border-green-500' color='gray' />
                     <div className='flex flex-col items-start justify-start'>
                         <span className='text-[20px] font-semibold tracking-wide text-gray-700'>{user.firstName} {user.lastName}</span>

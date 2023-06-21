@@ -26,6 +26,8 @@ const RegisterPage = () => {
         }
     }
 
+    const addressFields = ['road', 'roadNumber', 'postalCode', 'city', 'country']
+
     const [data, setData] = useState(initialData);
 
     useEffect(() => {
@@ -42,11 +44,17 @@ const RegisterPage = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }))
-
+        if(addressFields.includes(name)){
+            setData((prevData) => ({
+                ...prevData,
+                address: {...prevData.address, [name]: value}
+            }))
+        }else {
+            setData((prevData) => ({
+                ...prevData,
+                [name]: value
+            }))
+        }
     }
 
     const handleSignInClick = () => {
@@ -119,7 +127,7 @@ const RegisterForm = ({ data, handleChange, handleSubmit, handleSignInClick }) =
                 <input
                     name='road'
                     type='text'
-                    value={data.road}
+                    value={data.address.road}
                     onChange={handleChange}
                     placeholder='Road name'
                     className='w-[50%] py-4 px-3 border-2 rounded-sm text-gray-700 leading-tight mt-5 focus:outline-none '>
@@ -127,7 +135,7 @@ const RegisterForm = ({ data, handleChange, handleSubmit, handleSignInClick }) =
                 <input
                     name='roadNumber'
                     type='number'
-                    value={data.roadNumber}
+                    value={data.address.roadNumber}
                     onChange={handleChange}
                     placeholder='Road No'
                     className='w-[20%] py-4 px-3 border-2 rounded-sm text-gray-700 leading-tight mt-5 focus:outline-none '>
@@ -135,7 +143,7 @@ const RegisterForm = ({ data, handleChange, handleSubmit, handleSignInClick }) =
                 <input
                     name='postalCode'
                     type='number'
-                    value={data.postalCode}
+                    value={data.address.postalCode}
                     onChange={handleChange}
                     placeholder='Postal code'
                     className='w-[30%] py-4 px-3 border-2 rounded-sm text-gray-700 leading-tight mt-5 focus:outline-none '>
@@ -145,7 +153,7 @@ const RegisterForm = ({ data, handleChange, handleSubmit, handleSignInClick }) =
                 <input
                     name='city'
                     type='text'
-                    value={data.city}
+                    value={data.address.city}
                     onChange={handleChange}
                     placeholder='City'
                     className='w-full py-4 px-3 border-2 rounded-sm text-gray-700 leading-tight mt-5 focus:outline-none '>
@@ -153,7 +161,7 @@ const RegisterForm = ({ data, handleChange, handleSubmit, handleSignInClick }) =
                 <input
                     name='country'
                     type='text'
-                    value={data.country}
+                    value={data.address.country}
                     onChange={handleChange}
                     placeholder='Country'
                     className='w-full py-4 px-3 border-2 rounded-sm text-gray-700 leading-tight mt-5 focus:outline-none '>
