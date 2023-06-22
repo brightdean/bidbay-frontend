@@ -49,7 +49,8 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
 
     const parseDate = (date) => {
         const parsed = new Date(date)
-        return parsed.getDate() + "/" + parsed.getMonth() + "/" + parsed.getFullYear()
+        console.log(parsed)
+        return parsed.getDate() + "/" + (parsed.getMonth() + 1) + "/" + parsed.getFullYear()
     }
 
     return (

@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'pacifico': ['Pacifico', 'cursive']
+        'pacifico': ['Pacifico', 'cursive'],
+        'lobster': ['Lobster', 'cursive'],
+        'montserrat': ['Montserrat', 'cursive']
       }
     },
   },
