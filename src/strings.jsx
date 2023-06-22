@@ -9,5 +9,6 @@ export const alreadyHaveAccountText = 'Already have an account?';
 export const clickHereLoginText = 'Click here to sign in';
 export const invalidCredentialsText = 'The credentials you provided appear to be invalid';
 export const marketPlaceText = 'Marketplace';
-export const salesText = 'Go to Sales';
+export const salesText = 'Go to your Sales';
 export const updateUserInfoText = 'Update Details';
+export const placeBidText = 'Place bid';

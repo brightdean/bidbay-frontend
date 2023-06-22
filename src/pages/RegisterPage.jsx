@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { alreadyHaveAccountText, clickHereLoginText, registerHeaderText, signupSubmitText } from '../strings';
 import { useNavigate } from 'react-router';
-import { dashboardRoute, loginRoute } from '../routes';
+import { marketplaceRoute, loginRoute } from '../routes';
 import axios from '../backend/axios';
 import { REGISTER_URL } from '../backend/urls';
 import useAuth from '../hooks/useAuth';
@@ -32,7 +31,7 @@ const RegisterPage = () => {
 
     useEffect(() => {
         if (auth.user)
-            navigate(dashboardRoute, { replace: true })
+            navigate(marketplaceRoute, { replace: true })
             
     }, [auth.user])
 

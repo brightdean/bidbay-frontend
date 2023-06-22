@@ -2,14 +2,15 @@
 import { Route, Routes } from 'react-router'
 import './App.css'
 import Layout from './routes/Layout'
-import { dashboardRoute, homeRoute, loginRoute, registerRoute, salesRoute, userProfileRoute } from './routes'
+import { marketplaceRoute, homeRoute, itemUploadRoute, loginRoute, registerRoute, salesRoute, userProfileRoute } from './routes'
 import WelcomePage from './pages/WelcomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import RequireAuth from './routes/RequireAuth'
-import DashboardPage from './pages/DashboardPage'
+import MarketplacePage from './pages/MarketplacePage'
 import SalesPage from './pages/SalesPage'
 import UserProfilePage from './pages/UserProfilePage'
+import ItemUploadPage from './pages/ItemUploadPage'
 
 function App() {
   return (
@@ -23,9 +24,10 @@ function App() {
 
         {/* ProtectedRoutes */}
         <Route element={<RequireAuth />}>
-          <Route path={dashboardRoute} element={<DashboardPage />} />
+          <Route path={marketplaceRoute} element={<MarketplacePage />} />
           <Route path={salesRoute} element={<SalesPage/>}/>
           <Route path={userProfileRoute} element={<UserProfilePage/>}/>
+          <Route path={itemUploadRoute} element={<ItemUploadPage/>}/>
         </Route>
 
       </Route>

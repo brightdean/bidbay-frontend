@@ -1,11 +1,12 @@
 import {ChevronLeftIcon, PlusIcon} from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router'
-import { dashboardRoute } from '../routes'
+import { marketplaceRoute, itemUploadRoute } from '../routes'
 import { useEffect, useState } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { ITEMS_BY_SELLER_URL } from '../backend/urls'
 import useAuth from '../hooks/useAuth'
 import ItemPreview from '../components/ItemPreview'
+import ItemUploadPage from './ItemUploadPage'
 
 const SalesPage = () => {
 
@@ -16,7 +17,11 @@ const SalesPage = () => {
   const [items, setItems] = useState([])
 
   const handleMarketplaceClick = () => {
-    navigate(dashboardRoute)
+    navigate(marketplaceRoute)
+  }
+
+  const handleUploadClick = () => {
+    navigate(itemUploadRoute);
   }
 
   useEffect(()=> {
@@ -39,7 +44,9 @@ const SalesPage = () => {
         </div>
       </section>
       <section className='flex w-full p-4 bg-white border-t-2'>
-        <button className='flex space-x-3 items-center justify-center min -w-[160px] w-[20%] py-4 bg-green-600 rounded-lg'>
+        <button 
+          className='flex space-x-3 items-center justify-center min-w-[160px] py-4 bg-green-600 rounded-lg hover:bg-green-500 transition-colors duration-300 ease-in-out'
+          onClick={handleUploadClick}>
           <PlusIcon className='w-6 h-6' color='white'/>
           <span className='text-white text-base font-bold'>Upload Item</span>
         </button>
