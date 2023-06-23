@@ -1,4 +1,4 @@
-import {ChevronLeftIcon, PlusIcon} from '@heroicons/react/24/solid'
+import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router'
 import { marketplaceRoute, itemUploadRoute } from '../routes'
 import { useEffect, useState } from 'react'
@@ -6,14 +6,16 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { ITEMS_BY_SELLER_URL } from '../backend/urls'
 import useAuth from '../hooks/useAuth'
 import ItemPreview from '../components/ItemPreview'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const SalesPage = () => {
 
   const navigate = useNavigate()
   const axiosPrivate = useAxiosPrivate()
-  const {auth} = useAuth()
+  const { auth } = useAuth()
 
-  const [items, setItems] = useState([])
+  const [activeItems, setActiveItems] = useState()
+  const [expiredItems, setExpiredItems] = useState()
 
   const handleMarketplaceClick = () => {
     navigate(marketplaceRoute)
@@ -23,39 +25,63 @@ const SalesPage = () => {
     navigate(itemUploadRoute);
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     axiosPrivate.get(ITEMS_BY_SELLER_URL, {
-      params: {id: auth.user.id, active:false}
+      params: { id: auth.user.id, active: true }
     })
-    .then(response => {
-      if(response.status === 200)
-        setItems(response.data)
+      .then(response => {
+        if (response.status === 200)
+          setActiveItems(response.data)
+      })
+      .catch(error => console.log(error))
+
+    axiosPrivate.get(ITEMS_BY_SELLER_URL, {
+      params: { id: auth.user.id, active: false }
     })
-    .catch(error => console.log(error))
-  },[])
+      .then(response => {
+        if (response.status === 200)
+          setExpiredItems(response.data)
+      })
+      .catch(error => console.log(error))
+  }, [])
 
   return (
     <div className='flex flex-col w-full h-full bg-slate-100'>
       <section className="flex p-3 bg-white w-full items-center justify-start">
         <div className='flex space-x-4 h-full items-center cursor-pointer' onClick={handleMarketplaceClick}>
-          <ChevronLeftIcon className='w-8 h-8' color='gray'/>
+          <ChevronLeftIcon className='w-8 h-8' color='gray' />
           <h2 className='text-lg font-bold text-stone-600'>Back to Marketplace</h2>
         </div>
       </section>
       <section className='flex w-full p-4 border-t-2'>
-        <button 
+        <button
           className='flex space-x-3 items-center justify-center min-w-[160px] py-4 bg-green-600 rounded-full hover:bg-green-500 transition-colors duration-300 ease-in-out'
           onClick={handleUploadClick}>
-          <PlusIcon className='w-6 h-6' color='white'/>
+          <PlusIcon className='w-6 h-6' color='white' />
           <span className='text-white text-base font-bold'>Upload Item</span>
         </button>
       </section>
       <section className='flex flex-col w-full h-full items-start justify-start p-6 '>
         <span className='flex w-full text-[20px] font-semibold text-gray-700'>Active Sales</span>
         <div className='flex w-full h-full items-start justify-start py-4 space-x-12 overflow-x-auto'>
-          {items.map(item => <div key={item.id}><ItemPreview data={item}/></div>)}
+          {activeItems ?
+            activeItems.map(item => <div key={item.id}><ItemPreview data={item} isExpired={false} /></div>) :
+            <div className='flex w-full items-center justify-center'>
+              <LoadingSpinner />
+            </div>}
         </div>
-         
+
+      </section>
+      <section className='flex flex-col w-full h-full items-start justify-start p-6 '>
+        <span className='flex w-full text-[20px] font-semibold text-gray-700'>Expired Sales</span>
+        <div className='flex w-full h-full items-start justify-start py-4 space-x-12 overflow-x-auto'>
+          {expiredItems ?
+            expiredItems.map(item => <div key={item.id}><ItemPreview data={item} isExpired/></div>) :
+            <div className='flex w-full items-center justify-center'>
+              <LoadingSpinner />
+            </div>}
+        </div>
+
       </section>
     </div>
   )

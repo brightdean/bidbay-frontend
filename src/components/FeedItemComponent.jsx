@@ -62,7 +62,7 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
                 </span>
                 <div className="flex flex-col items-start w-[70%] mb-5">
                     <span className="text-gray-800 font-bold">Description</span>
-                    <div style={{ maxHeight: showDesc ? '400px' : 0 }} className="min-h-[20px] overflow-hidden w-[400px] break-words text-left -translate-y-1 text-gray-500 transition-all duration-500 ease-in-out">
+                    <div style={{ maxHeight: showDesc ? '400px' : 0 }} className="min-h-[22px] overflow-hidden w-[400px] break-words text-left -translate-y-1 text-gray-500 transition-all duration-500 ease-in-out">
                         {item.description}
                     </div>
                     <span className="font-bold text-gray-700 cursor-pointer" onClick={() => setShowDesc(!showDesc)}>More..</span>
@@ -84,11 +84,11 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
                 <section className="flex w-full items-center justify-between">
                     <span className="flex flex-col">
                         <span className="text-gray-800 font-bold">Starting Price</span>
-                        <span className="-translate-y-1 text-gray-500 font-bold">{item.initialPrice}</span>
+                        <span className="-translate-y-1 text-gray-500 font-bold">{item.initialPrice} €</span>
                     </span>
                     <span className="flex flex-col">
                         <span className="text-gray-800 font-bold">Current Price</span>
-                        <span className="-translate-y-1 text-gray-500 font-bold">{item.currentPrice}</span>
+                        <span className="-translate-y-1 text-gray-500 font-bold">{item.currentPrice} €</span>
                     </span>
                     <span className="flex flex-col">
                         <span className="text-gray-800 font-bold">Bid Count</span>

@@ -11,3 +11,4 @@ export const ITEMS_FOR_USER_NEWEST_URL = '/api/v1/items';
 export const PLACE_BID_URL = '/api/v1/bids';
 export const ITEMS_FOR_USER_FILTERED_BY_CREATION_URL = '/api/v1/items/filter/createdAt';
 export const ITEMS_FOR_USER_FILTERED_URL = '/api/v1/items/filter';
+export const USER_BIDS_URL = '/api/v1/bids';

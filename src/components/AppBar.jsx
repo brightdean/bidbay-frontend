@@ -1,21 +1,32 @@
 import { UserIcon, ArrowRightOnRectangleIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/solid'
-import { appName, salesText } from '../strings'
+import { appName, bidsText, salesText } from '../strings'
 
-const AppBar = ({ user, handleLogout, handleProfileClick, handleSalesClick }) => {
+const AppBar = ({ user, handleLogout, handleProfileClick, handleSalesClick, handleBidsClick }) => {
     return (
         <section className='flex items-center w-full bg-white py-4 px-6 max-h-[70px] justify-between border-b-[4px]'>
             <section className='flex justify-start items-center space-x-4'>
                 <img className='w-[36px] h-[36px]' src='logo.svg'></img>
                 <h2 className='font-semibold text-[30px] text-stone-500 font-pacifico'>{appName}</h2>
             </section>
+            <section className='flex items-center justify-between space-x-6'>
             <section
-                className='flex items-center justify-center space-x-2 rounded-full bg-stone-600 px-3 py-2 cursor-pointer hover:drop-shadow-xl transition-all duration-300 ease-in-out'
+                className='flex items-center justify-center space-x-2 rounded-full px-3 py-2 cursor-pointer'
                 onClick={handleSalesClick}
                 >
-                <span className='text-white text-[16px] font-semibold tracking-wide'>{salesText}</span>
-                <ArrowTrendingUpIcon className='w-6 h-6' color='white' />
+                <span className='text-[16px] font-semibold tracking-wide'>{salesText}</span>
+                <ArrowTrendingUpIcon className='w-6 h-6'/>
 
             </section>
+
+            <section
+                className='flex items-center justify-center space-x-2 rounded-full px-3 py-2 cursor-pointer'
+                onClick={handleBidsClick}
+                >
+                <span className='text-[16px] font-semibold tracking-wide'>{bidsText}</span>
+
+            </section>
+            </section>
+            
 
 
             <section className='flex items-center justify-center space-x-8'>

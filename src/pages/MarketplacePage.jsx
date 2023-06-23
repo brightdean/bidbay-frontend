@@ -5,16 +5,17 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { ITEMS_FOR_USER_FILTERED_URL, ITEMS_FOR_USER_NEWEST_URL, LOGOUT_URL, PLACE_BID_URL } from '../backend/urls'
 import { useNavigate } from 'react-router'
 import Cookies from 'js-cookie'
-import { homeRoute, salesRoute, userProfileRoute } from '../routes'
+import { bidsRoute, homeRoute, salesRoute, userProfileRoute } from '../routes'
 import { ArrowDownRightIcon, ArrowUpRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import FeedItemComponent from '../components/FeedItemComponent'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const initialFilterData = {
-    '1' : {page:0, by: "createdAt", sort: "desc"},
-    '2' : {page: 0, by: "createdAt", sort: "asc"},
-    '3' : {page: 0, by: "currentPrice", sort: "asc"},
-    '4' : {page: 0, by: "currentPrice", sort: "desc"},
-    '5' : {},
+    '1': { page: 0, by: "createdAt", sort: "desc" },
+    '2': { page: 0, by: "createdAt", sort: "asc" },
+    '3': { page: 0, by: "currentPrice", sort: "asc" },
+    '4': { page: 0, by: "currentPrice", sort: "desc" },
+    '5': {},
 }
 //this is performance costly
 let filterData = JSON.parse(JSON.stringify(initialFilterData))
@@ -29,11 +30,14 @@ const MarketplacePage = () => {
     const [items, setItems] = useState([])
     const pageRef = useRef(0);
 
+    const [loading, setLoading] = useState(true)
+
 
     const [activeFilter, setActiveFilter] = useState('1')
 
     useEffect(() => {
         setItems([])
+        setLoading(true)
         console.log(initialFilterData)
         filterData = JSON.parse(JSON.stringify(initialFilterData))
 
@@ -71,7 +75,7 @@ const MarketplacePage = () => {
         if (hasNextPage)
             filterData[activeFilter].page = filterData[activeFilter].page + 1
         else
-        filterData[activeFilter].page = -1;
+            filterData[activeFilter].page = -1;
 
         console.log(filterData[activeFilter])
     }
@@ -96,6 +100,10 @@ const MarketplacePage = () => {
 
     const handleSalesClick = () => {
         navigate(salesRoute)
+    }
+
+    const handleBidsClick = () => {
+        navigate(bidsRoute)
     }
 
     const handleNameSearch = (e) => {
@@ -125,13 +133,12 @@ const MarketplacePage = () => {
     }
 
     const fetchItemsFiltered = (ps) => {
-        console.log(filterData[activeFilter])
         if (ps.page != -1) {
             axiosPrivate.get(ITEMS_FOR_USER_FILTERED_URL,
                 { params: ps })
                 .then(response => {
                     if (response.status === 200) {
-                        if(ps.page === 0)
+                        if (ps.page === 0)
                             setItems(response.data.content)
                         else
                             setItems(items.concat(response.data.content))
@@ -139,6 +146,7 @@ const MarketplacePage = () => {
                     }
                 })
                 .catch(error => console.log(error))
+                .finally(()=> setLoading(false))
         }
     }
 
@@ -149,7 +157,7 @@ const MarketplacePage = () => {
     return (
         <div className='flex w-screen h-screen bg-slate-200'>
             <section className='fixed top-0 right-0 flex flex-col w-full h-full'>
-                <AppBar user={auth.user} handleLogout={handleLogout} handleProfileClick={handleProfileClick} handleSalesClick={handleSalesClick} />
+                <AppBar user={auth.user} handleLogout={handleLogout} handleProfileClick={handleProfileClick} handleSalesClick={handleSalesClick} handleBidsClick={handleBidsClick} />
                 <div className='flex flex-col justify-start items-center w-full h-full p-4 space-y-8 overflow-y-scroll'>
                     <form noValidate onSubmit={handleNameSearch} className='flex w-[50%] bg-white rounded-full p-4 drop-shadow-lg items-center justify-start space-x-4'>
                         <MagnifyingGlassIcon className='w-6 h-6' color='gray' />
@@ -204,10 +212,13 @@ const MarketplacePage = () => {
                             id={'5'} />
                     </section>
 
-                    {items.map(item => <div key={item.id}
+                    {!loading ? items.map(item => <div key={item.id}
                         className='flex w-[70%]'>
                         <FeedItemComponent item={item} handlePlaceBid={handlePlaceBid} />
-                    </div>)}
+                    </div>) :
+                        <div className='flex w-full items-center justify-center'>
+                            <LoadingSpinner />
+                        </div>}
 
                     <button
                         className='p-3 outline-none border-none rounded-lg bg-stone-600 text-white font-bold'
