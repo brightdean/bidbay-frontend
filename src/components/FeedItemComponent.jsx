@@ -19,10 +19,10 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
         itemId: item.id,
         price: ''
     }
-    
+
     const [bid, setBid] = useState(initialBid)
 
-    
+
 
     useEffect(() => {
         console.log(item.imagePath)
@@ -33,7 +33,7 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(bid.price <= item.currentPrice){
+        if (bid.price <= item.currentPrice) {
             alert('Bid price must be greater than the current price')
             return
         }
@@ -55,8 +55,8 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
 
     return (
         <div className="flex w-full drop-shadow-lg space-x-6">
-            {image && <img src={URL.createObjectURL(image)} className="w-[300px] h-[300px] object-cover"></img>}
-            <div className="flex flex-col w-full p-6 bg-white space-y-4">
+            {image && <img src={URL.createObjectURL(image)} className="w-[300px] h-[300px] object-cover rounded-2xl"></img>}
+            <div className="flex flex-col w-full p-6 bg-white space-y-4 rounded-2xl">
                 <span className="text-lg font-bold text-gray-800">
                     {item.name}
                 </span>
@@ -69,17 +69,17 @@ const FeedItemComponent = ({ item, handlePlaceBid }) => {
                 </div>
 
                 <div className="flex w-full items-center justify-start space-x-8">
-                <span className="flex flex-col">
-                    <span className="text-gray-800 font-bold">Upload Date</span>
-                    <span className="text-gray-500 font-bold">{parseDate(item.createdAt)}</span>
-                </span>
-                <span className="flex flex-col">
-                    <span className="text-gray-800 font-bold">Closing Date</span>
-                    <span className="text-gray-500 font-bold">{parseDate(item.expiresAt)}</span>
-                </span>
+                    <span className="flex flex-col">
+                        <span className="text-gray-800 font-bold">Upload Date</span>
+                        <span className="text-gray-500 font-bold">{parseDate(item.createdAt)}</span>
+                    </span>
+                    <span className="flex flex-col">
+                        <span className="text-gray-800 font-bold">Closing Date</span>
+                        <span className="text-gray-500 font-bold">{parseDate(item.expiresAt)}</span>
+                    </span>
                 </div>
-               
-                
+
+
 
                 <section className="flex w-full items-center justify-between">
                     <span className="flex flex-col">

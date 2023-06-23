@@ -44,12 +44,12 @@ const ItemUploadPage = () => {
         formData.append('item', JSON.stringify(itemPayload))
         formData.append('file', pic)
 
-        axiosPrivate.post(UPLOAD_ITEM_URL, formData, {headers: {'Content-Type' : 'multipart/form-data'}})
-        .then(response => {
-            if(response.status === 201){
-                navigate(salesRoute, {replace:true})
-            }
-        })
+        axiosPrivate.post(UPLOAD_ITEM_URL, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(response => {
+                if (response.status === 201) {
+                    navigate(salesRoute, { replace: true })
+                }
+            })
     }
 
     const handleUploadClick = (e) => {
@@ -72,8 +72,8 @@ const ItemUploadPage = () => {
     }
 
     return (
-        <div className="flex w-full h-full items-center justify-center bg-slate-200 p-6">
-            <form noValidate onSubmit={handleSubmit} className="flex flex-col space-y-4 bg-white p-4 items-center w-[50%] min-w-[400px]">
+        <div className="flex w-screen h-screen items-center justify-center bg-slate-200 p-6">
+            <form noValidate onSubmit={handleSubmit} className="flex flex-col space-y-4 bg-white p-4 items-center w-[50%] min-w-[400px] max-w-[700px]">
                 <div className="flex w-[250px] h-[250px]" onClick={handleUploadClick}>
                     <ImageContainer picUrl={picUrl} />
                 </div>
