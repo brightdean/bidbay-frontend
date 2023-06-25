@@ -26,7 +26,7 @@ const MarketplacePage = () => {
     const navigate = useNavigate()
     const { auth } = useAuth()
 
-    const [nameSearch, setNameSearch] = useState()
+    const [nameSearch, setNameSearch] = useState('')
     const [items, setItems] = useState([])
     const pageRef = useRef(0);
 
@@ -44,30 +44,6 @@ const MarketplacePage = () => {
         fetchItemsFiltered(filterData[activeFilter])
     }, [activeFilter])
 
-    const fetchNewestItems = () => {
-        if (pageRef.current != -1) {
-            axiosPrivate.get(ITEMS_FOR_USER_NEWEST_URL,
-                { params: { page: pageRef.current } })
-                .then(response => {
-                    if (response.status === 200) {
-
-                        setItems(items.concat(response.data.content))
-                        getNextPage(response.data)
-                    }
-                })
-                .catch(error => console.log(error))
-        }
-
-    }
-
-    const getNextPage = (pageable) => {
-        const hasNextPage = (pageable.totalPages - (pageable.number + 1)) > 0
-
-        if (hasNextPage)
-            pageRef.current = pageRef.current + 1
-        else
-            pageRef.current = -1;
-    }
 
     const getFilterNextPage = (pageable) => {
         const hasNextPage = (pageable.totalPages - (pageable.number + 1)) > 0
@@ -106,8 +82,21 @@ const MarketplacePage = () => {
         navigate(bidsRoute)
     }
 
+    const handleNameChange = (e) => {
+        setNameSearch(e.target.value)
+    }
+
     const handleNameSearch = (e) => {
         e.preventDefault()
+        const ps = filterData[activeFilter];
+        ps.name = nameSearch
+        pageRef.current = 0;
+        ps.page = 0;
+        setItems([])
+        
+        
+        fetchItemsFiltered(ps)
+
     }
 
 
@@ -146,7 +135,7 @@ const MarketplacePage = () => {
                     }
                 })
                 .catch(error => console.log(error))
-                .finally(()=> setLoading(false))
+                .finally(() => setLoading(false))
         }
     }
 
@@ -163,6 +152,9 @@ const MarketplacePage = () => {
                         <MagnifyingGlassIcon className='w-6 h-6' color='gray' />
                         <input
                             type='text'
+                            name='nameSearch'
+                            value={nameSearch}
+                            onChange={handleNameChange}
                             placeholder='Search items by name...'
                             className='w-full text-gray-700 leading-tight focus:outline-none'>
                         </input>
